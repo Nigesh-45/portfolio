@@ -34,7 +34,7 @@ export default function About() {
                 </div>
                 <div className="about-info-item">
                   <span><Languages size={14} style={{ display: 'inline', marginRight: '4px', verticalAlign: 'text-bottom' }} /> Languages</span>
-                  <p>English, Tamil, Japanese</p>
+                  <p>English, Tamil</p>
                 </div>
               </div>
             </div>

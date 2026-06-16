@@ -299,16 +299,16 @@ section {
 /* Hero Section */
 .hero-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   min-height: 85vh;
-  gap: 2rem;
+  gap: 4rem;
   padding-top: 4rem;
 }
 
 .hero-content {
-  width: 100%;
+  flex: 1.2;
 }
 
 .hero-title {
@@ -405,7 +405,55 @@ section {
 }
 
 .hero-visual {
-  display: none; /* Hide visual on desktop in hero to match minimalist screenshot */
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  border-radius: 30px;
+  padding: 5px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 20px rgba(0, 82, 255, 0.15);
+  transition: all 0.5s ease;
+}
+
+.hero-image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  filter: blur(15px);
+  opacity: 0.3;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+.hero-image-wrapper:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 82, 255, 0.35);
+}
+
+.hero-image-wrapper:hover::before {
+  opacity: 0.6;
+  filter: blur(25px);
+}
+
+.hero-profile-image {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 25px;
+  border: 4px solid var(--bg-main);
+  background: var(--bg-surface);
+  display: block;
 }
 
 /* Custom CSS 3D Cube/Core */
@@ -960,12 +1008,31 @@ footer p {
   color: var(--text-muted);
 }
 
-/* Responsive Styles */
 @media (max-width: 992px) {
   .hero-wrapper {
     flex-direction: column-reverse;
     text-align: center;
     padding-top: 2rem;
+    align-items: center;
+  }
+  .hero-content {
+    flex: none;
+    width: 100%;
+  }
+  .hero-visual {
+    flex: none;
+    margin-bottom: 2.5rem;
+  }
+  .hero-profile-image {
+    width: 240px;
+    height: 240px;
+    border-radius: 20px;
+  }
+  .hero-image-wrapper {
+    border-radius: 25px;
+  }
+  .hero-image-wrapper::before {
+    border-radius: 25px;
   }
   .hero-desc {
     margin: 0 auto 2.5rem;

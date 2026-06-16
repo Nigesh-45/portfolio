@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
+import heroImage from '../assets/hero.png';
 
 export default function Hero() {
   const words = ['actionable.', 'predictive.', 'intelligent.', 'impactful.'];
@@ -99,6 +100,17 @@ export default function Hero() {
               </a>
             </motion.div>
           </div>
+
+          <motion.div 
+            className="hero-visual"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="hero-image-wrapper">
+              <img src={heroImage} alt="Nigesh A" className="hero-profile-image" />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
