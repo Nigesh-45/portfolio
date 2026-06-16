@@ -1,13 +1,15 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
-import TiltCard from '../components/TiltCard';
 import { Code, Cpu, Database, BarChart, Users } from 'lucide-react';
 
 export default function Skills() {
+  const [activeTab, setActiveTab] = useState(0);
+
   const skillCategories = [
     {
       title: 'Languages',
-      icon: <Code size={20} />,
+      icon: <Code size={18} />,
       skills: [
         { name: 'Python', level: '90%' },
         { name: 'SQL', level: '85%' },
@@ -18,7 +20,7 @@ export default function Skills() {
     },
     {
       title: 'Libraries & Frameworks',
-      icon: <Cpu size={20} />,
+      icon: <Cpu size={18} />,
       skills: [
         { name: 'NumPy', level: '85%' },
         { name: 'Pandas', level: '88%' },
@@ -28,7 +30,7 @@ export default function Skills() {
     },
     {
       title: 'Data & Analytics',
-      icon: <Database size={20} />,
+      icon: <Database size={18} />,
       skills: [
         { name: 'Power BI', level: '85%' },
         { name: 'Excel', level: '80%' },
@@ -38,7 +40,7 @@ export default function Skills() {
     },
     {
       title: 'Platforms & Tools',
-      icon: <BarChart size={20} />,
+      icon: <BarChart size={18} />,
       skills: [
         { name: 'Jupyter Notebook', level: '90%' },
         { name: 'VS Code', level: '85%' },
@@ -48,7 +50,7 @@ export default function Skills() {
     },
     {
       title: 'Soft Skills',
-      icon: <Users size={20} />,
+      icon: <Users size={18} />,
       skills: [
         { name: 'Analytical Thinking', level: '90%' },
         { name: 'Team Collaboration', level: '85%' },
@@ -65,39 +67,64 @@ export default function Skills() {
           <h2 className="section-title">Skills & Expertise</h2>
         </ScrollReveal>
 
-        <div className="skills-categories">
-          {skillCategories.map((category, catIdx) => (
-            <ScrollReveal key={category.title} delay={catIdx * 0.1}>
-              <TiltCard className="skill-card-wrapper" style={{ height: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                  <div className="project-icon" style={{ margin: 0, width: '40px', height: '40px' }}>
-                    {category.icon}
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 600 }}>{category.title}</h3>
-                </div>
+        <div className="skills-layout">
+          {/* Left Sidebar Tabs */}
+          <div className="skills-tabs">
+            {skillCategories.map((category, index) => (
+              <button
+                key={category.title}
+                className={`skill-tab-button ${activeTab === index ? 'active' : ''}`}
+                onClick={() => setActiveTab(index)}
+              >
+                <span className="tab-icon">{category.icon}</span>
+                <span className="tab-title">{category.title}</span>
+                {activeTab === index && (
+                  <motion.div
+                    layoutId="activeTabGlow"
+                    className="active-tab-glow"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
 
-                <div className="skill-progress-container">
-                  {category.skills.map((skill) => (
-                    <div className="skill-progress-bar" key={skill.name}>
-                      <div className="skill-progress-label">
-                        <span>{skill.name}</span>
-                        <span>{skill.level}</span>
+          {/* Right Skills Display Area */}
+          <div className="skills-display">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+                className="skills-list-wrapper"
+              >
+                <div className="skills-display-header">
+                  <span className="header-icon">{skillCategories[activeTab].icon}</span>
+                  <h3>{skillCategories[activeTab].title}</h3>
+                </div>
+                <div className="skills-grid-new">
+                  {skillCategories[activeTab].skills.map((skill) => (
+                    <div className="skill-progress-bar-new" key={skill.name}>
+                      <div className="skill-progress-label-new">
+                        <span className="skill-name-new">{skill.name}</span>
+                        <span className="skill-level-new">{skill.level}</span>
                       </div>
-                      <div className="skill-progress-track">
+                      <div className="skill-progress-track-new">
                         <motion.div
-                          className="skill-progress-fill"
+                          className="skill-progress-fill-new"
                           initial={{ width: 0 }}
-                          whileInView={{ width: skill.level }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1.2, delay: 0.1, ease: 'easeOut' }}
+                          animate={{ width: skill.level }}
+                          transition={{ duration: 1.0, ease: 'easeOut' }}
                         />
                       </div>
                     </div>
                   ))}
                 </div>
-              </TiltCard>
-            </ScrollReveal>
-          ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
